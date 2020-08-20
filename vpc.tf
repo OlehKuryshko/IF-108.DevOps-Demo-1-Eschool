@@ -24,7 +24,6 @@ resource "google_compute_router" "router" {
 }
 
 resource "google_compute_address" "address" {
-  # count  = "${var.countnat}"
   name   = "nat-external-address"
   region = "${var.region}"
 }

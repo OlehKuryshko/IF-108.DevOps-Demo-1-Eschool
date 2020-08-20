@@ -1,0 +1,92 @@
+---
+- name: Install list of packages
+  package: name={{item}} state=present
+  with_items:
+      - git
+      - wget
+      - java-1.8.0-openjdk-devel
+
+- name: Downloading Maven Binaries
+  get_url:
+    url: http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+    dest: /opt/apache-maven-3.6.3-bin.tar.gz
+    url_username: ''
+    url_password: ''
+
+- name: Unarchive Maven Binaries
+  unarchive:
+    src: /opt/apache-maven-3.6.3-bin.tar.gz
+    dest: /opt
+    copy: no
+
+- name: Remove old path configuration
+  file:
+    path: /etc/profile.d/maven.sh
+    state: absent
+
+- name: Maven path configuration
+  lineinfile:
+    dest: /etc/profile.d/maven.sh
+    line: '{{ item.line }}'
+    create: yes
+    state: present
+  with_items:
+    - { line: 'JAVA_HOME=/usr/lib/jvm/jre-openjdk' }
+    - { line: 'M2_HOME=/opt/maven' }
+    - { line: 'MAVEN_HOME=/opt/maven' }
+    - { line: 'PATH=/opt/apache-maven-3.6.3/bin:$PATH' }
+
+- name: Enable SELinux
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Change file ownership, group and permissions
+  file:
+    path: /etc/profile.d/maven.sh
+    owner: centos
+    group: centos
+    mode: '0777'
+
+- name: Cleaning Up
+  file:
+    state: absent
+    path: /opt/apache-maven-3.6.3-bin.tar.gz
+
+- name: clone repository
+  shell: sudo git clone https://github.com/OlehKuryshko/eSchool.git
+  args:
+    chdir: /home/centos/
+
+- name: command mvn clean
+  shell: sudo /opt/apache-maven-3.6.3/bin/mvn clean
+  args:
+    chdir: /home/centos/eSchool/
+
+- name: command mvn package -DskipTest
+  shell: sudo /opt/apache-maven-3.6.3/bin/mvn package -DskipTests
+  args:
+    chdir: /home/centos/eSchool/
+
+- name: mv eschool.jar
+  shell: sudo mv target/eschool.jar /tmp/eschool.jar
+  args:
+    chdir: /home/centos/eSchool/
+
+- name: start eschool.jar
+  become: yes
+  become_user: centos
+  become_method: sudo
+  shell: "nohup /usr/lib/jvm/jre-openjdk/bin/java -jar eschool.jar > /home/centos/eschool.log &"
+  args:
+    chdir: /tmp/
+
+- name: open port 8080
+  shell: sudo firewall-cmd --permanent --add-port=8080/tcp
+  args:
+    chdir: /home/centos/
+
+- name: reload firewall
+  shell: sudo firewall-cmd --reload
+  args:
+    chdir: /home/centos/

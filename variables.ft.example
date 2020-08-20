@@ -1,34 +1,6 @@
 #------GCP
-variable "key" {
-  default = "*******/key.json"
-}
 variable "project" {
-  default= "******"
-}
-variable "pub_key" {
-  default = "********/id_rsa.pub"
-}
-variable "hosts" {
-  default = "******/hosts.txt"
-}
-variable "name_lb" {
-    type = "list"
-    default = ["frontend", "backend"]
-}
-variable "name_count" {
-    type = "list"
-    default = ["1", "2"]
-}
-variable "ip_back_count" {
-    type = "list"
-    default = ["10.0.12.8", "10.0.12.7"]
-}
-variable "ip_fr_count" {
-    type = "list"
-    default = ["10.0.12.6", "10.0.12.5"]
-}
-variable "ip_db" {
-    default = "10.0.12.9"
+  default= "*************"
 }
 variable "region" {
   default = "us-central1"
@@ -45,30 +17,39 @@ variable "image" {
 variable "gce_ssh_user" {
     default = "centos"
 }
-
-//VPC vars
-variable "countnat" {
-    default = "1"
-}
 variable "ip_cidr_range_private" {
     default = "10.0.12.0/24"
 }
+variable "count_number" {
+    default = 2
+}
+variable "ip_db" {
+    default = "*************"
+}
+#-----inventory file
+variable "hosts" {
+  default = "*************"
+}
+#------------------keys
+variable "key" {
+  default = "*************/key.json"
+}
+variable "pub_key" {
+  default = "*************/id_rsa.pub"
+}
 #----------Ansible
 variable "pvt_key" {
-  default= "*******/id_rsa"
-}
-variable "pvt_key_ansible" {
-  default= "*******/.ssh/id_rsa"
+  default= "*************/id_rsa"
 }
 #-------- AWS provider
 variable "aws_access_key" {
-  default = "*********"
+  default = "*************"
 }
 variable "aws_secret_key" {
-  default = "***********"
+  default = "*************"
 }
 variable "dns_zone_name" {
-  default = "******************"
+  default = "*************"
 }
 variable "region_aws" {
   default = "eu-west-1"

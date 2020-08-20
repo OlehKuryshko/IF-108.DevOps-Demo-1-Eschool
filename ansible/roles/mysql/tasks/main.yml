@@ -1,0 +1,6 @@
+
+- name: copy script
+  template: src=/home/centos/ansible/roles/mysql/template/db.sh dest=/tmp/db.sh owner=root group=root mode=0777
+
+- name: install mysql script
+  shell: sudo /tmp/db.sh

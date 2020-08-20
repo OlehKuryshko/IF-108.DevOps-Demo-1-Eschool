@@ -1,0 +1,6 @@
+---
+# -------Backend
+- hosts: backend
+  become: true
+  roles:
+    - backend-ci

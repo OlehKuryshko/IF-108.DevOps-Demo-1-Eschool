@@ -1,13 +1,12 @@
-#------------aws
+#------------aws dns
 data "aws_route53_zone" "selected" {
   name = "${var.dns_zone_name}"
 }
-
-resource "aws_route53_record" "my_dns" {
-  count = "${length(var.name_count)}"
+resource "aws_route53_record" "my_dns_backend" {
   zone_id = "${data.aws_route53_zone.selected.zone_id}"
-  name = "lb-${element(var.name_lb, count.index)}.${data.aws_route53_zone.selected.name}"
+  name = "lb-backend.${data.aws_route53_zone.selected.name}"
   type = "A"
   ttl     = "300"
-  records = ["${element(google_compute_instance.lb[*].network_interface.0.access_config.0.nat_ip, count.index)}"]
+  records = ["${google_compute_global_forwarding_rule.global_forwarding_rule_be.ip_address}"]
+  depends_on = [google_compute_global_forwarding_rule.global_forwarding_rule_be]
 }

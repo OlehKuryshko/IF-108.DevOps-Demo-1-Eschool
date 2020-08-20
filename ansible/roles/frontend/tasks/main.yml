@@ -1,0 +1,6 @@
+---
+- name: copy script
+  template: src=/home/centos/ansible/roles/frontend/template/fr.sh dest=/tmp/fr.sh owner=root group=root mode=0777
+
+- name: install httpd script
+  shell: sudo /tmp/fr.sh

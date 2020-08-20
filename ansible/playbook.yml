@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - update
+  
+# -------DB
+- hosts: db
+  become: true
+  roles:
+    - mysql
+
+# -------Backend
+- hosts: backend
+  become: true
+  roles:
+    - backend
+
+# -------front
+- hosts: frontend
+  become: true
+  roles:
+    - frontend

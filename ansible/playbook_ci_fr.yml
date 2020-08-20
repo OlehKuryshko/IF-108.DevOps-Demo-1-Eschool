@@ -1,0 +1,6 @@
+---
+# -------Frontend
+- hosts: frontend
+  become: true
+  roles:
+    - frontend-ci
