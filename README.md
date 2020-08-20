@@ -7,7 +7,7 @@ __Must be installed:__
 * access key and secret key for amazon cloud
 * generate your ssh key
 * generate tokens from the git lab runners
-### Link to frontend and backend git repository:
+### Link to frontend and backend git repositories:
 * __[frontend](https://github.com/OlehKuryshko/final_project)__
 * __[backend](https://github.com/OlehKuryshko/eSchool)__
 ### After you have changed all the variables, run the following command
