@@ -1,5 +1,4 @@
 # Demo 1 Eschool
-___
 ### This repository contains all the necessary information to create the infrastructure, configure servers, frontend and backend builds, as well as CI/CD project.
 __Must be installed:__
 - __[terraform](https://www.terraform.io/downloads.html)__ version => 0.12.0
