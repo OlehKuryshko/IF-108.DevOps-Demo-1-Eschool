@@ -26,7 +26,7 @@ resource "null_resource" "ansibleProvision" {
     destination = "/home/centos/ansible"
   }
   provisioner "file" {
-    source = "bastion-0.sh"
+    source = "bastion.sh"
     destination = "/tmp/bastion.sh"
   }
   provisioner "remote-exec" {
